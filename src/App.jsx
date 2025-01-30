@@ -30,13 +30,13 @@ function App() {
 
   // function to edit an existing todo
   const handleEdit = (e, id) => {
-    let t = todos.filter((i) => i.id === id);
-    setTodo(t[0].todo);
+    let t = todos.filter((i) => i.id === id); // extracts the todo with the matching id 
+    setTodo(t[0].todo); // sets selected todo to setTodo
     let newTodos = todos.filter((item) => {
       return item.id !== id;
     });
-    setTodos(newTodos);
-    saveToLS();
+    setTodos(newTodos); // updates the array of todo 
+    saveToLS(); // saves the todo to local storage
   };
 
   // function to delete todo
@@ -44,8 +44,8 @@ function App() {
     let newTodos = todos.filter((item) => {
       return item.id !== id;
     });
-    setTodos(newTodos);
-    saveToLS();
+    setTodos(newTodos); // updates the array of todo 
+    saveToLS(); // saves the todo to local storage
   };
 
   // function to add new todo
@@ -68,8 +68,8 @@ function App() {
     });
     let newTodos = [...todos];
     newTodos[index].isCompleted = !newTodos[index].isCompleted;
-    setTodos(newTodos);
-    saveToLS();
+    setTodos(newTodos); // updates the array of todo 
+    saveToLS(); // saves the todo to local storage
   };
 
   // JSX
@@ -128,29 +128,38 @@ function App() {
           {todos.length === 0 && <div className="m-5">No Todos to display</div>} 
           {/* it checks the length of the array from todos.length and if the length is 0 i.e. if there is no todo then it displays the text "NO TODOS TO DISPLAY" */}
           
-          {todos.map((item) => {
+          {todos.map((item) => { // displays everything on the array i.e. todos using map method
             return (
-              (showFinished || !item.isCompleted) && (
+              (showFinished || !item.isCompleted) && ( // determines if the todo should be displayed or not
+                                                      // if showFinished is true, show all todos else show only which are not compeleted 
                 <div key={item.id} className={"todo flex my-3 justify-between"}>
+
                   <div className="flex gap-5">
+
                     <input
-                      name={item.id}
+                      name={item.id} 
                       onChange={handleCheckbox}
-                      type="checkbox"
-                      checked={item.isCompleted}
+                      type="checkbox" // checkbox to determine if the todo is completed or not
+                      checked={item.isCompleted} 
                       id=""
                     />
+
                     <div className={item.isCompleted ? "line-through" : ""}>
-                      {item.todo}
-                    </div>
+                      {item.todo} 
+                    </div> {/* if isCompleted is true then cut the todo, i.e. mark as completed */}
+
                   </div>
+
                   <div className="buttons flex h-full">
+                    {/* button to handle edit */}
                     <button
                       onClick={(e) => handleEdit(e, item.id)}
                       className="bg-violet-800 hover:bg-violet-950 p-2 py-1 text-sm font-bold text-white rounded-md mx-1"
                     >
                       <FaEdit />
                     </button>
+
+                    {/* button to handle delete */}
                     <button
                       onClick={(e) => {
                         handleDelete(e, item.id);
@@ -159,6 +168,7 @@ function App() {
                     >
                       <AiFillDelete />
                     </button>
+
                   </div>
                 </div>
               )
